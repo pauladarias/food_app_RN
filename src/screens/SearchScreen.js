@@ -5,32 +5,40 @@ import useResults from "../hooks/useResults"
 import ResultsList from "../components/ResultsList"
 
 const SearchScreen = () => {
+  
   const [term, setTerm] = useState("")
   const [searchApi, results, errorMessage] = useResults()
 
-  console.log(results)
-  
+
   const filterResultsByPrice = (price) => {
     return results.filter(result  => {
       return result.price === price
     }) 
   }
-
-  return <View style={{ flex: 1}}>
+  console.log(results)
+  return <>
     <SearchBar 
       term={term} 
       onTermChange={(newTerm) => {setTerm(newTerm)}}
       onTermSubmit={() => searchApi(term)}
     />
     {errorMessage ? <Text>{errorMessage}</Text> : null}
-    <Text>We have found {results.length}</Text>
     <ScrollView>
-      <ResultsList results={filterResultsByPrice('£')} title="CostEffective"/>
-      <ResultsList results={filterResultsByPrice("££")}title="Bit Pricier"/>
-      <ResultsList results={filterResultsByPrice("£££")}title="Big Spender"/>
+      <ResultsList 
+        results={filterResultsByPrice('£')} 
+        title="CostEffective"
+      />
+      <ResultsList 
+        results={filterResultsByPrice("££")}
+        title="Bit Pricier" 
+      />
+      <ResultsList 
+        results={filterResultsByPrice("£££")}
+        title="Big Spender"
+      />
     </ScrollView>
     
-  </View>
+  </>
 }
 
 const styles = StyleSheet.create ({
